@@ -1,8 +1,14 @@
 #import "DMProgressHUD.h"
-#import "PlatformConst.h"
-#import "NSString+Category.h"
 
-#define kLabelFontSize              (17)
+
+#if DEBUG
+#   define DMHUDLog(...)  NSLog(__VA_ARGS__)
+#else
+#   define DMHUDLog(...)
+#endif
+
+
+static const CGFloat kLabelFontSize = 17.0f;
 
 @interface DMProgressHUD ()
 
@@ -25,7 +31,7 @@
 
 - (void)dealloc
 {
-    Log(@"%@ dealloc", _CURFUNCTIONNAME_);
+    DMHUDLog(@"%@ dealloc", [self class]);
     
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
@@ -154,7 +160,28 @@
 
 - (void)adjustSubViewFrame
 {
-    CGSize size = [self.statusString calcTextDisplaySizeWithWidth:self.bounds.size.width font:self.m_statusFont];
+    CGFloat width = self.bounds.size.width;
+    UIFont *font = self.m_statusFont;
+    NSString *string = self.statusString;
+    CGSize size = CGSizeZero;
+    
+    CGFloat systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (systemVersion >= 6.0 && systemVersion <= 7.0)
+    {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+        size = [string sizeWithFont:font constrainedToSize:CGSizeMake(width, 2000)];
+#pragma clang diagnostic pop
+    }
+    else
+    {
+        CGSize temp = CGSizeMake(width, 2000);
+        NSStringDrawingOptions opt = NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+        NSDictionary *dic = @{NSFontAttributeName: font};
+        
+        size = [string boundingRectWithSize:temp options:opt attributes:dic context:nil].size;
+    }
+    
     CGFloat backgroundViewW = 0;
     CGFloat backgroundViewH = 0;
     CGFloat indicatorViewW = 0;
