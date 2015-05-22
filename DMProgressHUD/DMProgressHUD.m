@@ -36,6 +36,7 @@ static const CGFloat kLabelFontSize = 17.0f;
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
+/// 显示状态
 + (instancetype)showWithStatus:(NSString *)status inView:(UIView *)inView
 {
     return [self showWithStatus:status inView:inView delay:0 finishBlock:nil];
