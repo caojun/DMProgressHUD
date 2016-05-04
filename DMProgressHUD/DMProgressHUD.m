@@ -36,17 +36,12 @@ static const CGFloat kLabelFontSize = 17.0f;
 
 @interface DMProgressHUD ()
 
-@property (nonatomic, weak) UIView *m_backgroundView;
-@property (nonatomic, weak) UIActivityIndicatorView *m_indicatorView;
-@property (nonatomic, weak) UILabel *m_label;
-
-@property (nonatomic, copy) dispatch_block_t finishBlock;
-
-@property (nonatomic, strong) UIFont *m_statusFont;
-
-@property (nonatomic, weak) UIView *m_superView;
-@property (nonatomic, strong) NSLayoutConstraint *m_backgroundConstX;
-@property (nonatomic, strong) NSLayoutConstraint *m_backgroundConstY;
+@property (nullable, nonatomic, weak) UIView *m_backgroundView;
+@property (nullable, nonatomic, weak) UIActivityIndicatorView *m_indicatorView;
+@property (nullable, nonatomic, weak) UILabel *m_label;
+@property (nullable, nonatomic, copy) dispatch_block_t finishBlock;
+@property (nullable, nonatomic, strong) UIFont *m_statusFont;
+@property (nullable, nonatomic, weak) UIView *m_superView;
 
 @end
 
@@ -61,12 +56,16 @@ static const CGFloat kLabelFontSize = 17.0f;
 }
 
 /// 显示状态
-+ (instancetype)showWithStatus:(NSString *)status inView:(UIView *)inView
++ (instancetype)showWithStatus:(nullable NSString *)status
+                        inView:(nonnull UIView *)inView
 {
     return [self showWithStatus:status inView:inView delay:0 finishBlock:nil];
 }
 
-+ (instancetype)showWithStatus:(NSString *)status inView:(UIView *)inView delay:(NSTimeInterval)delay finishBlock:(dispatch_block_t)finishBlock
++ (instancetype)showWithStatus:(nullable NSString *)status
+                        inView:(nonnull UIView *)inView
+                         delay:(NSTimeInterval)delay
+                   finishBlock:(nullable dispatch_block_t)finishBlock
 {
     DMProgressHUD *hud = [[self alloc] initWithFrame:inView.bounds];
     if (nil != hud)
@@ -154,7 +153,7 @@ static const CGFloat kLabelFontSize = 17.0f;
             indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
         }
     }
-
+    
     [self.m_indicatorView startAnimating];
 }
 
@@ -247,7 +246,7 @@ static const CGFloat kLabelFontSize = 17.0f;
     _statusString = statusString;
     
     self.m_label.text = statusString;
-
+    
     [self createBackgroundView];
     
     [self setNeedsLayout];

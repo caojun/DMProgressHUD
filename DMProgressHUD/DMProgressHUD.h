@@ -24,23 +24,28 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface DMProgressHUD : UIView
 
-@property (nonatomic, strong) UIColor *statusColor;
+@property (nullable, nonatomic, strong) UIColor *statusColor;
 
-@property (nonatomic, copy) NSString *statusString;
+@property (nullable, nonatomic, copy) NSString *statusString;
 
 @property (nonatomic, assign) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 
 
-+ (instancetype)showWithStatus:(NSString *)status inView:(UIView *)inView;
++ (instancetype)showWithStatus:(nullable NSString *)status
+                        inView:(nonnull UIView *)inView;
 
 
-+ (instancetype)showWithStatus:(NSString *)status
-                        inView:(UIView *)inView
++ (instancetype)showWithStatus:(nullable NSString *)status
+                        inView:(nonnull UIView *)inView
                          delay:(NSTimeInterval)delay
-                   finishBlock:(dispatch_block_t)finishBlock;
+                   finishBlock:(nullable dispatch_block_t)finishBlock;
 
 - (void)dismiss;
 
 @end
+
+NS_ASSUME_NONNULL_END
