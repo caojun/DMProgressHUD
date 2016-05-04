@@ -72,7 +72,6 @@ static const CGFloat kLabelFontSize = 17.0f;
     {
         [inView addSubview:hud];
         hud.m_superView = inView;
-        [hud hudAutolayout];
         hud.backgroundColor = [UIColor clearColor];
         hud.userInteractionEnabled = NO;
         
@@ -91,24 +90,6 @@ static const CGFloat kLabelFontSize = 17.0f;
     return hud;
 }
 
-- (void)hudAutolayout
-{
-    self.translatesAutoresizingMaskIntoConstraints = NO;
-    
-    NSMutableArray *array = [NSMutableArray array];
-    
-    NSString *constH = @"H:|-0-[self]-0-|";
-    NSString *constV = @"V:|-0-[self]-0-|";
-    NSDictionary *dict = NSDictionaryOfVariableBindings(self);
-    
-    NSArray *tempArray = [NSLayoutConstraint constraintsWithVisualFormat:constH options:0 metrics:nil views:dict];
-    [array addObjectsFromArray:tempArray];
-    
-    tempArray = [NSLayoutConstraint constraintsWithVisualFormat:constV options:0 metrics:nil views:dict];
-    [array addObjectsFromArray:tempArray];
-    
-    [_m_superView addConstraints:array];
-}
 
 - (void)finishHandle
 {
