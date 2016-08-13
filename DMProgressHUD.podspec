@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.name         = "DMProgressHUD"
   s.version      = "0.0.6"
-  s.summary      = ""
+  s.summary      = "加载中提示View"
 
   s.description  = <<-DESC
                    A longer description of DMProgressHUD in Markdown format.
